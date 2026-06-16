@@ -1,6 +1,0 @@
-res://scenes/MainMenu.tscn
-res://scripts/StoryScene.gd
-res://scripts/LevelScene.gd
-res://data/levels.json
-res://data/story.json
-res://scenes/LevelScene.tscn
