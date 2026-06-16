@@ -1,0 +1,49 @@
+{
+  "levels": {
+	"level_1": {
+	  "levelId": "level_1",
+	  "type": "match3",
+	  "objective": "collect_evidence",
+	  "moves": 25,
+	  "target": 10,
+	  "theme": "police_station",
+	  "hint": "Collect evidence tiles to crack the case before the timer runs out."
+	},
+	"level_2": {
+	  "levelId": "level_2",
+	  "type": "match3",
+	  "objective": "decrypt_signal",
+	  "moves": 22,
+	  "target": 12,
+	  "theme": "phone_hack",
+	  "hint": "Match signal bars to trace Victor's location."
+	},
+	"level_3": {
+	  "levelId": "level_3",
+	  "type": "match3",
+	  "objective": "escape_ambush",
+	  "moves": 20,
+	  "target": 8,
+	  "theme": "factory_trap",
+	  "hint": "Clear trap tiles and create chain reactions to escape."
+	},
+	"level_26": {
+	  "levelId": "level_26",
+	  "type": "match3",
+	  "objective": "restore_power",
+	  "moves": 30,
+	  "target": 15,
+	  "theme": "factory_grid",
+	  "hint": "Restore power by matching generator tiles and clearing locks."
+	},
+	"level_41": {
+	  "levelId": "level_41",
+	  "type": "match3",
+	  "objective": "disable_traps",
+	  "moves": 35,
+	  "target": 18,
+	  "theme": "rescue_cot",
+	  "hint": "Disable the trap system with precision matches and bombs."
+	}
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "scenes": {
+	"scene_1": {
+	  "sceneId": "scene_1",
+	  "title": "The Message",
+	  "text": "Victor sends a ransom video: 'Half of Amara's wealth or Ethan dies.' David must choose how to respond.",
+	  "choices": [
+		{ "text": "Call Police", "nextLevel": "level_1" },
+		{ "text": "Trace Signal", "nextLevel": "level_2" },
+		{ "text": "Go Alone", "nextLevel": "level_3" }
+	  ]
+	},
+	"scene_2": {
+	  "sceneId": "scene_2",
+	  "title": "The Investigation",
+	  "text": "The first clue points toward Victor's factory. The rescue begins now.",
+	  "choices": [
+		{ "text": "Continue to Factory", "nextLevel": "level_26" }
+	  ]
+	}
+  }
+}
