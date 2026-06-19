@@ -21,3 +21,8 @@ config/features=PackedStringArray("4.6")
 [autoload]
 
 GameManager="*res://scripts/GameManager.gd"
+AssetLoader="*res://scripts/AssetLoader.gd"
+
+[rendering]
+
+textures/vram_compression/import_etc2_astc=true

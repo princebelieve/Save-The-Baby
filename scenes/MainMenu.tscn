@@ -11,44 +11,134 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1544146191]
-layout_mode = 0
+[node name="Background" type="ColorRect" parent="." unique_id=1544146191]
+layout_mode = 1
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color(0.08, 0.11, 0.18, 1)
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.15, 0.25, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=2131433202]
-layout_mode = 0
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -180.0
-offset_top = -120.0
-offset_right = 180.0
+[node name="TopBar" type="Panel" parent="." unique_id=-1193247051]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
 offset_bottom = 120.0
-alignment = 1
+grow_horizontal = 2
 
-[node name="Title" type="Label" parent="VBoxContainer" unique_id=2009081088]
-layout_mode = 2
+[node name="Title" type="Label" parent="TopBar" unique_id=-1193247050]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
 text = "SAVE THE BABY"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Subtitle" type="Label" parent="VBoxContainer" unique_id=573255642]
-layout_mode = 2
-text = "A story-driven match-3 rescue game"
+[node name="Subtitle" type="Label" parent="TopBar" unique_id=-1193247049]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 14
+text = "A Story-Driven Rescue Adventure"
 horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="StartButton" type="Button" parent="VBoxContainer" unique_id=760782859]
-layout_mode = 2
-text = "Start Story"
+[node name="MainContent" type="HBoxContainer" parent="." unique_id=-1093246946]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
 
-[node name="ContinueButton" type="Button" parent="VBoxContainer" unique_id=860251846]
+[node name="CharacterSection" type="VBoxContainer" parent="MainContent" unique_id=-1093246945]
 layout_mode = 2
-text = "Continue"
+size_flags_horizontal = 3
+alignment = 1
 
-[node name="ResetButton" type="Button" parent="VBoxContainer" unique_id=994745492]
+[node name="SaviorLabel" type="Label" parent="MainContent/CharacterSection" unique_id=-1093246944]
 layout_mode = 2
-text = "Reset Progress"
+theme_override_colors/font_color = Color(0.2, 0.8, 0.3, 1)
+theme_override_font_sizes/font_size = 16
+text = "DAVID - The Savior"
+horizontal_alignment = 1
+
+[node name="DavidImage" type="TextureRect" parent="MainContent/CharacterSection"]
+custom_minimum_size = Vector2(120,120)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+expand_mode = 3
+
+[node name="CentralSection" type="VBoxContainer" parent="MainContent" unique_id=-1093246942]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="BabyLabel" type="Label" parent="MainContent/CentralSection" unique_id=-1093246941]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8, 0.2, 1)
+theme_override_font_sizes/font_size = 16
+text = "ETAN - The Baby"
+horizontal_alignment = 1
+
+[node name="EtanImage" type="TextureRect" parent="MainContent/CentralSection"]
+custom_minimum_size = Vector2(140,140)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+expand_mode = 3
+
+[node name="Buttons" type="VBoxContainer" parent="MainContent/CentralSection" unique_id=-1093246939]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="StartButton" type="Button" parent="MainContent/CentralSection/Buttons" unique_id=760782859]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "🎮 Start Story"
+
+[node name="ContinueButton" type="Button" parent="MainContent/CentralSection/Buttons" unique_id=860251846]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "📖 Continue"
+
+[node name="ResetButton" type="Button" parent="MainContent/CentralSection/Buttons" unique_id=994745492]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "🔄 Reset Progress"
+
+[node name="VillainSection" type="VBoxContainer" parent="MainContent" unique_id=-1093246938]
+layout_mode = 2
+size_flags_horizontal = 3
+alignment = 1
+
+[node name="VillainLabel" type="Label" parent="MainContent/VillainSection" unique_id=-1093246937]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.2, 0.2, 1)
+theme_override_font_sizes/font_size = 16
+text = "VICTOR - The Threat"
+horizontal_alignment = 1
+
+[node name="VictorImage" type="TextureRect" parent="MainContent/VillainSection"]
+custom_minimum_size = Vector2(120,120)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+expand_mode = 3
