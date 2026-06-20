@@ -5,10 +5,14 @@ var level_data: Dictionary = {}
 var current_scene_id: String = "scene_1"
 var current_level_id: String = "level_1"
 var progress_key: String = "save_the_baby_progress"
+var current_scene_rotation: String = ""
 
 func _ready() -> void:
 	load_data()
 	load_progress()
+
+func set_scene_rotation(scene_name: String) -> void:
+	current_scene_rotation = scene_name
 
 func load_data() -> void:
 	story_data = load_json_file("res://data/story.json")
@@ -64,4 +68,7 @@ func reset_progress() -> void:
 		DirAccess.remove_absolute("user://save_the_baby_progress.json")
 
 func go_to_scene(scene_path: String) -> void:
+	get_tree().change_scene_to_file(scene_path)
+
+func change_scene(scene_path: String, scene_name := "") -> void:
 	get_tree().change_scene_to_file(scene_path)

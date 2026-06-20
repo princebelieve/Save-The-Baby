@@ -1,11 +1,21 @@
 extends Control
 
-var typing_speed = 0.04
+var typing_speed = 0.03
+var is_skipping = false
 
 func _ready() -> void:
 	randomize()
 	GameManager.set_scene_rotation("IntroScene")
-	await show_scene("scene_1")
+	
+	# Connect skip button
+	$ContentPanel/SkipButton.pressed.connect(_on_skip_pressed)
+	
+	# Start from scene_overview by default
+	var scene_id = GameManager.current_scene_id
+	if scene_id.is_empty() or scene_id == "scene_1":
+		scene_id = "scene_overview"
+	
+	await show_scene(scene_id)
 
 func show_scene(scene_id: String) -> void:
 	var story = GameManager.story_data.get("scenes", {})
@@ -15,37 +25,94 @@ func show_scene(scene_id: String) -> void:
 		print("Scene not found: ", scene_id)
 		return
 	
-	# Update title
-	$ContentPanel/TopSection/CentralSection/Title.text = scene.get("title", "Story")
-	$ContentPanel/TopSection/CentralSection/Subtitle.text = scene.get("narrator", "")
+	is_skipping = false
+	var image_name = scene.get("image", "badge.png")
 	
-	# Handle image display
-	var image_path = scene.get("image", "badge.png")
-	show_image_section(image_path)
+	# Determine if this is a full-screen image scene
+	var is_fullscreen = image_name in ["overview.png", "kidnapping.png"]
 	
-	# Show typing animation and await it
+	if is_fullscreen:
+		# Show full-screen image with fade-in
+		$ContentPanel.hide()
+		await show_fullscreen_image(image_name)
+		$ContentPanel.show()
+	else:
+		# Show character-based scene
+		$FullScreenContainer/PortraitImage.hide()
+		$ContentPanel/TopSection/Title.text = scene.get("title", "Story")
+		$ContentPanel/MiddleSection/SpeakerLabel.text = scene.get("narrator", "") + ":"
+		
+		# Load and display character image
+		show_character_image(image_name)
+	
+	# Show story text with typing animation
 	await show_typing_animation(scene.get("text", ""))
 	
-	# Now show the choices
+	# Show choices
 	show_choices(scene.get("choices", []))
 
-func show_image_section(image_name: String) -> void:
-	# Hide all sections first
-	$ContentPanel/TopSection/VictorWithEtan.hide()
-	$ContentPanel/TopSection/MothersAppeal.hide()
+func show_fullscreen_image(image_name: String) -> void:
+	var texture_path = "res://assets/" + image_name
+	var texture = load(texture_path)
 	
-	# Show appropriate section based on image
+	if texture == null:
+		print("Failed to load texture: ", texture_path)
+		return
+	
+	$FullScreenContainer/PortraitImage.texture = texture
+	$FullScreenContainer/PortraitImage.show()
+	
+	# Fade in effect
+	var tween = create_tween()
+	$FullScreenContainer.modulate.a = 0.0
+	tween.tween_property($FullScreenContainer, "modulate:a", 1.0, 1.5)
+	
+	# Wait for user to proceed
+	await get_tree().create_timer(3.0).timeout
+
+func show_character_image(image_name: String) -> void:
+	var texture_path = "res://assets/" + image_name
+	var texture = load(texture_path)
+	
+	if texture == null:
+		print("Failed to load texture: ", texture_path)
+		return
+	
+	# Update character display
+	$ContentPanel/TopSection/CharacterDisplay/CharacterImage.texture = texture
+	
+	# Update character label
 	match image_name:
 		"badge.png":
-			$ContentPanel/TopSection/MothersAppeal.show()
+			$ContentPanel/TopSection/CharacterDisplay/CharacterLabel.text = "AMARA\n(Mother)"
+		"david.png":
+			$ContentPanel/TopSection/CharacterDisplay/CharacterLabel.text = "DAVID"
+		"Victor.png":
+			$ContentPanel/TopSection/CharacterDisplay/CharacterLabel.text = "VICTOR"
+		"etan.png":
+			$ContentPanel/TopSection/CharacterDisplay/CharacterLabel.text = "ETHAN"
+		"detective.png":
+			$ContentPanel/TopSection/CharacterDisplay/CharacterLabel.text = "DETECTIVE"
+		"police.png":
+			$ContentPanel/TopSection/CharacterDisplay/CharacterLabel.text = "POLICE"
+		"phone.png":
+			$ContentPanel/TopSection/CharacterDisplay/CharacterLabel.text = "TECH SPECIALIST"
+		"recorder.png":
+			$ContentPanel/TopSection/CharacterDisplay/CharacterLabel.text = "EQUIPMENT"
+		"opened.png":
+			$ContentPanel/TopSection/CharacterDisplay/CharacterLabel.text = "FREEDOM"
 		_:
-			$ContentPanel/TopSection/VictorWithEtan.show()
+			$ContentPanel/TopSection/CharacterDisplay/CharacterLabel.text = "CHARACTER"
 
 func show_typing_animation(full_text: String) -> void:
 	var text_label = $ContentPanel/MiddleSection/StoryText
 	text_label.text = ""
 	
 	for i in range(len(full_text)):
+		if is_skipping:
+			text_label.text = full_text
+			return
+		
 		text_label.text += full_text[i]
 		await get_tree().create_timer(typing_speed).timeout
 
@@ -81,13 +148,25 @@ func show_choices(choices: Array) -> void:
 		btn.add_theme_font_size_override("font_size", 16)
 		
 		var next_scene = choice.get("nextScene", "scene_1")
-		var next_level = choice.get("nextLevel", "level_1")
+		var next_level = choice.get("nextLevel", "")
 		
 		btn.pressed.connect(func():
-			GameManager.current_level_id = next_level
 			GameManager.current_scene_id = next_scene
-			GameManager.save_progress()
-			GameManager.change_scene("res://scenes/LevelScene.tscn", "LevelScene")
+			if not next_level.is_empty():
+				GameManager.current_level_id = next_level
+				GameManager.save_progress()
+				GameManager.change_scene("res://scenes/LevelScene.tscn", "LevelScene")
+			else:
+				GameManager.save_progress()
+				await show_scene(next_scene)
 		)
 		
 		$ContentPanel/ChoiceSection/ChoiceButtons.add_child(btn)
+
+func _on_skip_pressed() -> void:
+	is_skipping = true
+	# Jump to level if available, otherwise go to menu
+	if not GameManager.current_level_id.is_empty():
+		GameManager.change_scene("res://scenes/LevelScene.tscn", "LevelScene")
+	else:
+		GameManager.change_scene("res://scenes/MainMenu.tscn", "MainMenu")

@@ -2,7 +2,7 @@ extends Control
 
 func _ready() -> void:
 	print("MAIN MENU LOADED")
-	GameManager.set_scene_rotation("MainMenu")
+
 
 	$MainContent/CentralSection/Buttons/StartButton.pressed.connect(_on_start_pressed)
 	$MainContent/CentralSection/Buttons/ContinueButton.pressed.connect(_on_continue_pressed)
@@ -12,7 +12,7 @@ func _on_start_pressed() -> void:
 	print("START STORY CLICKED")
 
 	GameManager.reset_progress()
-	GameManager.current_scene_id = "scene_1"
+	GameManager.current_scene_id = "scene_overview"
 
 	GameManager.change_scene("res://scenes/IntroScene.tscn", "IntroScene")
 
