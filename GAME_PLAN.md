@@ -3,12 +3,14 @@
 ## Story Flow
 
 ### Act 1: The Kidnapping (Overview Scene)
+
 - **Scene**: overview.png fades in with dangerous sounds
 - **Story**: Victor has kidnapped Ethan (baby)
 - **Next**: Transition to Amara's appeal scene
 
 ### Act 2: Amara's Plea (Main Story Scene)
-- **Image**: badge.png (Amara - placeholder, real image needed)
+
+- **Image**: badge.png (Amara)
 - **Text**: Amara begs David to save Ethan
 - **Victor's Demand**: "All your wealth should be transferred to me or you lose the baby"
 - **David's Choices**:
@@ -23,6 +25,7 @@
 Each track has **50+ levels** with progressive difficulty. Each level must reach **100% progress bar** before advancing (not move-based).
 
 ### Track 1: Call Police (Police Station Investigation)
+
 - **Scenes**:
   - police-station.png: Detective says "We need evidence"
   - Levels 1-50: Collect evidence (phone records, fingerprints, witness statements)
@@ -33,6 +36,7 @@ Each track has **50+ levels** with progressive difficulty. Each level must reach
   - Levels 31-50: Hard difficulty
 
 ### Track 2: Trace Signal (Phone Hacking)
+
 - **Scenes**:
   - phone.png + recorder.png: Tech specialist says "Decrypt communication data"
   - Levels 1-50: Match signal patterns and decrypt data
@@ -40,6 +44,7 @@ Each track has **50+ levels** with progressive difficulty. Each level must reach
 - **Level Progression**: Similar difficulty curve
 
 ### Track 3: Go Alone (Factory Traps)
+
 - **Scenes**:
   - david.png: "I'm going alone"
   - Levels 1-50: Navigate bombs, chains, locked doors, traps
@@ -55,6 +60,7 @@ Each track has **50+ levels** with progressive difficulty. Each level must reach
 ## Victory Condition
 
 After completing 50 levels in any track:
+
 - **Victory Scene**: David receives key pieces (minimum 10 keys)
 - **Next Act**: Factory rescue with remaining puzzles
 - **Final Boss**: Confront Victor, rescue Ethan
@@ -63,37 +69,38 @@ After completing 50 levels in any track:
 
 ## Asset Mapping
 
-| Asset | Purpose |
-|-------|---------|
-| overview.png | Opening scene - Victor kidnaps Ethan |
-| badge.png | Amara (placeholder - needs real image) |
-| kidnapping.png | Story illustration |
-| police.png | Police officer |
-| police-station.png | Police station setting |
-| detective.png | Detective |
-| david.png | David (protagonist) |
-| Victor.png | Victor (antagonist) |
-| etan.png | Ethan (baby) |
-| phone.png | Phone/communication |
-| key.png | Evidence/puzzle piece |
-| bomb.png | Obstacle tile |
-| chain.png | Obstacle tile |
-| clock.png | Timer/special tile |
-| finger-print.png | Evidence tile |
-| missile.png | Trap/obstacle |
-| locked.png | Locked door tile |
-| opened.png | Unlocked state |
-| pincher.png | Trap/tool |
-| plier.png | Tool/obstacle |
-| recorder.png | Recording/evidence |
-| tape.png | Evidence/obstacle |
-| thunder-bolt.png | Power/special effect |
+| Asset              | Purpose                                |
+| ------------------ | -------------------------------------- |
+| overview.png       | Opening scene - Victor kidnaps Ethan   |
+| badge.png          | Amara (placeholder - needs real image) |
+| kidnapping.png     | Story illustration                     |
+| police.png         | Police officer                         |
+| police-station.png | Police station setting                 |
+| detective.png      | Detective                              |
+| david.png          | David (protagonist)                    |
+| Victor.png         | Victor (antagonist)                    |
+| etan.png           | Ethan (baby)                           |
+| phone.png          | Phone/communication                    |
+| key.png            | Evidence/puzzle piece                  |
+| bomb.png           | Obstacle tile                          |
+| chain.png          | Obstacle tile                          |
+| clock.png          | Timer/special tile                     |
+| finger-print.png   | Evidence tile                          |
+| missile.png        | Trap/obstacle                          |
+| locked.png         | Locked door tile                       |
+| opened.png         | Unlocked state                         |
+| pincher.png        | Trap/tool                              |
+| plier.png          | Tool/obstacle                          |
+| recorder.png       | Recording/evidence                     |
+| tape.png           | Evidence/obstacle                      |
+| thunder-bolt.png   | Power/special effect                   |
 
 ---
 
 ## UI/Layout Issues to Fix
 
 ### Current Problems:
+
 - Game window too tall for portrait (overflow)
 - Game window may be too wide
 - Text/buttons cut off or too small
@@ -101,11 +108,13 @@ After completing 50 levels in any track:
 - Progress bar not visible
 
 ### Solution:
+
 - **Target Window Size**: 480×854 (standard Android 9:16 aspect ratio)
 - **Safe Area**: 460×800 (20px margins)
 - **Max Content Height**: 780px (accounting for status bar)
 
 ### Scene Layout Structure:
+
 ```
 Portrait Mode (480×854):
 ┌─────────────────────────┐
@@ -139,6 +148,7 @@ Portrait Mode (480×854):
 ---
 
 ## Next Steps
+
 - Update all scene files with proper layout
 - Generate complete story/levels JSON files
 - Implement progress bar mechanics

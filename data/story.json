@@ -1,56 +1,166 @@
 {
   "scenes": {
-	"scene_1": {
-	  "sceneId": "scene_1",
-	  "title": "The Kidnapping",
-	  "narrator": "Amara (Mother)",
-	  "text": "Victor came to the house. He took my Ethan away. He says he'll only return him if I give him everything I have. David, I don't have much time. You're my only hope. Please, find my baby and bring him back safely.",
-	  "image": "badge.png",
-	  "choices": [
-		{ "text": "Call Police", "nextLevel": "level_1", "nextScene": "scene_1_police" },
-		{ "text": "Trace Signal", "nextLevel": "level_2", "nextScene": "scene_1_trace" },
-		{ "text": "Go Alone", "nextLevel": "level_3", "nextScene": "scene_1_alone" }
-	  ]
-	},
-	"scene_1_police": {
-	  "sceneId": "scene_1_police",
-	  "title": "Calling for Help",
-	  "narrator": "Detective",
-	  "text": "We need evidence. Help us collect clues to build a case against Victor. Find phone records, fingerprints, and witness statements at the police station.",
-	  "image": "police.png",
-	  "choices": [
-		{ "text": "Begin Investigation", "nextLevel": "level_1" }
-	  ]
-	},
-	"scene_1_trace": {
-	  "sceneId": "scene_1_trace",
-	  "title": "Signal Trace",
-	  "narrator": "Tech Specialist",
-	  "text": "We can trace Victor's signal through his phone. Decrypt the communication data by matching signal patterns. The more matches, the closer we get to his location.",
-	  "image": "phone.png",
-	  "choices": [
-		{ "text": "Start Decryption", "nextLevel": "level_2" }
-	  ]
-	},
-	"scene_1_alone": {
-	  "sceneId": "scene_1_alone",
-	  "title": "Going Solo",
-	  "narrator": "David",
-	  "text": "I'm going alone. Victor won't expect help. I'll need to navigate his traps carefully and find Ethan without alerting him. Every move counts.",
-	  "image": "david.png",
-	  "choices": [
-		{ "text": "Proceed Carefully", "nextLevel": "level_3" }
-	  ]
-	},
-	"scene_2": {
-	  "sceneId": "scene_2",
-	  "title": "The Investigation",
-	  "narrator": "Narrator",
-	  "text": "The first clue points toward Victor's factory. The rescue begins now.",
-	  "image": "police-station.png",
-	  "choices": [
-		{ "text": "Continue to Factory", "nextLevel": "level_26" }
-	  ]
-	}
+    "scene_intro": {
+      "sceneId": "scene_intro",
+      "title": "The Kidnapping Overview",
+      "narrator": "Narrator",
+      "text": "Victor has kidnapped Ethan, the baby. The family's only hope lies with David. He must choose his path carefully.",
+      "image": "overview.png",
+      "choices": [
+        { "text": "Proceed", "nextScene": "scene_1" }
+      ]
+    },
+    "scene_1": {
+      "sceneId": "scene_1",
+      "title": "Amara's Plea",
+      "narrator": "Amara (Mother)",
+      "text": "Victor came to the house. He took my Ethan away. He says he'll only return him if I give him everything I have. David, I don't have much time. You're my only hope. Please, find my baby and bring him back safely.",
+      "image": "badge.png",
+      "choices": [
+        { "text": "Call Police", "nextScene": "scene_1_police" },
+        { "text": "Trace Signal", "nextScene": "scene_1_trace" },
+        { "text": "Go Alone", "nextScene": "scene_1_alone" }
+      ]
+    },
+    "scene_1_police": {
+      "sceneId": "scene_1_police",
+      "title": "Police Station Investigation",
+      "narrator": "Detective",
+      "text": "We need evidence to build a case against Victor. Help us collect clues: phone records, fingerprints, and witness statements. The more evidence we gather, the closer we get to Ethan.",
+      "image": "police-station.png",
+      "choices": [
+        { "text": "Begin Investigation", "nextLevel": "level_1", "nextScene": "scene_2_police" }
+      ]
+    },
+    "scene_1_trace": {
+      "sceneId": "scene_1_trace",
+      "title": "Signal Trace Setup",
+      "narrator": "Tech Specialist",
+      "text": "We can trace Victor's signal through his phone communications. Decrypt the data by matching signal patterns and phone records. The more we decrypt, the closer we locate Victor's position.",
+      "image": "phone.png",
+      "choices": [
+        { "text": "Start Decryption", "nextLevel": "level_51", "nextScene": "scene_2_trace" }
+      ]
+    },
+    "scene_1_alone": {
+      "sceneId": "scene_1_alone",
+      "title": "Solo Mission",
+      "narrator": "David",
+      "text": "I'm going alone into Victor's compound. Victor won't expect help. I need to navigate through bombs, chains, locks, and traps. Every move counts. I must reach Ethan without alerting Victor.",
+      "image": "david.png",
+      "choices": [
+        { "text": "Proceed Carefully", "nextLevel": "level_101", "nextScene": "scene_2_alone" }
+      ]
+    },
+    "scene_2_police": {
+      "sceneId": "scene_2_police",
+      "title": "Building the Case",
+      "narrator": "Detective",
+      "text": "Good progress! We're building a solid case. Continue gathering evidence. Each clue brings us closer to understanding Victor's location and operations.",
+      "image": "detective.png",
+      "choices": [
+        { "text": "Continue Investigation", "nextLevel": "level_11" }
+      ]
+    },
+    "scene_2_trace": {
+      "sceneId": "scene_2_trace",
+      "title": "Signal Getting Stronger",
+      "narrator": "Tech Specialist",
+      "text": "We're making progress! The signal is becoming clearer. Continue decrypting the communication patterns. Victor is using an old factory as his base - we can pinpoint it soon.",
+      "image": "recorder.png",
+      "choices": [
+        { "text": "Keep Decrypting", "nextLevel": "level_61" }
+      ]
+    },
+    "scene_2_alone": {
+      "sceneId": "scene_2_alone",
+      "title": "Into the Compound",
+      "narrator": "David",
+      "text": "I'm inside the perimeter. The compound is filled with dangers - explosives, mechanical traps, and locked doors. I need to be strategic about every move. Ethan must be kept safe somewhere in this facility.",
+      "image": "david.png",
+      "choices": [
+        { "text": "Navigate Further", "nextLevel": "level_111" }
+      ]
+    },
+    "scene_victory_police": {
+      "sceneId": "scene_victory_police",
+      "title": "Victor's Location Found!",
+      "narrator": "Detective",
+      "text": "Excellent work! We've gathered enough evidence to locate Victor's factory hideout. The police are ready to move in. But Victor knows we're coming. He's prepared traps and obstacles. We need David to reach Ethan first!",
+      "image": "police.png",
+      "choices": [
+        { "text": "Proceed to Rescue", "nextLevel": "level_26", "nextScene": "scene_factory_police" }
+      ]
+    },
+    "scene_victory_trace": {
+      "sceneId": "scene_victory_trace",
+      "title": "Signal Traced Successfully!",
+      "narrator": "Tech Specialist",
+      "text": "We've successfully traced Victor's signal! He's operating from an old industrial factory on the outskirts of the city. The building is filled with complex locks and security systems. We need to bypass them carefully.",
+      "image": "phone.png",
+      "choices": [
+        { "text": "Begin Factory Infiltration", "nextLevel": "level_76", "nextScene": "scene_factory_trace" }
+      ]
+    },
+    "scene_victory_alone": {
+      "sceneId": "scene_victory_alone",
+      "title": "Ethan's Location!",
+      "narrator": "David",
+      "text": "I've navigated through all the traps and reached the inner chambers of the factory. I can hear Ethan crying! Victor has a final series of obstacles between me and my son. I must solve these last puzzles carefully.",
+      "image": "david.png",
+      "choices": [
+        { "text": "Reach Ethan", "nextLevel": "level_126", "nextScene": "scene_final_alone" }
+      ]
+    },
+    "scene_factory_police": {
+      "sceneId": "scene_factory_police",
+      "title": "Factory Rescue - Police Route",
+      "narrator": "Detective & David",
+      "text": "We've breached the factory gates with backup. Victor's inner compound is filled with locks and security systems. David, you need to navigate through the final obstacles while we hold the perimeter. Ethan is close!",
+      "image": "police-station.png",
+      "choices": [
+        { "text": "Push Forward", "nextLevel": "level_36" }
+      ]
+    },
+    "scene_factory_trace": {
+      "sceneId": "scene_factory_trace",
+      "title": "Factory Infiltration - Tech Route",
+      "narrator": "Tech Specialist & David",
+      "text": "Using our hacking skills, we've disabled most of the electronic locks. But Victor has manual backup systems and traps. You need to solve these physical puzzles to reach Ethan's location. Hurry!",
+      "image": "phone.png",
+      "choices": [
+        { "text": "Bypass Systems", "nextLevel": "level_86" }
+      ]
+    },
+    "scene_final_alone": {
+      "sceneId": "scene_final_alone",
+      "title": "Victor's Final Challenge",
+      "narrator": "Victor",
+      "text": "You made it further than expected, David! But your journey ends here. I have one final game for you. Solve these puzzles, and you can have your son. Fail, and Ethan stays with me forever.",
+      "image": "Victor.png",
+      "choices": [
+        { "text": "Accept Challenge", "nextLevel": "level_136" }
+      ]
+    },
+    "scene_final_confrontation": {
+      "sceneId": "scene_final_confrontation",
+      "title": "Face to Face",
+      "narrator": "Narrator",
+      "text": "You've solved the final puzzle! Victor's security system is offline, and his compound is crumbling around him. Ethan is safe in the secure chamber. Victor attempts one last escape, but the police are closing in.",
+      "image": "opened.png",
+      "choices": [
+        { "text": "Continue", "nextScene": "scene_ending" }
+      ]
+    },
+    "scene_ending": {
+      "sceneId": "scene_ending",
+      "title": "Ethan is Safe!",
+      "narrator": "Narrator",
+      "text": "After an incredible rescue mission, Ethan is finally safe in your arms. Victor has been apprehended by authorities. The family is reunited, and peace is restored. You are a hero!",
+      "image": "opened.png",
+      "choices": [
+        { "text": "Return to Menu", "nextScene": "scene_1" }
+      ]
+    }
   }
 }

@@ -64,18 +64,17 @@ horizontal_alignment = 1
 [node name="MainContent" type="HBoxContainer" parent="." unique_id=-1093246946]
 layout_mode = 1
 anchors_preset = -1
+anchor_left = 0.05
 anchor_top = 0.15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -62.5
-offset_right = 62.5
+anchor_right = 0.95
+anchor_bottom = 0.98
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
 [node name="CharacterSection" type="VBoxContainer" parent="MainContent" unique_id=-1093246945]
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
 alignment = 1
 
 [node name="SaviorLabel" type="Label" parent="MainContent/CharacterSection" unique_id=-1093246944]
@@ -94,7 +93,7 @@ expand_mode = 3
 
 [node name="CentralSection" type="VBoxContainer" parent="MainContent" unique_id=-1093246942]
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
 alignment = 1
 
 [node name="BabyLabel" type="Label" parent="MainContent/CentralSection" unique_id=-1093246941]
@@ -112,9 +111,9 @@ size_flags_vertical = 4
 expand_mode = 3
 
 [node name="Buttons" type="VBoxContainer" parent="MainContent/CentralSection" unique_id=-1093246939]
-custom_minimum_size = Vector2(300, 0)
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 2
-size_flags_horizontal = 4
+size_flags_horizontal = 2
 
 [node name="StartButton" type="Button" parent="MainContent/CentralSection/Buttons" unique_id=760782859]
 layout_mode = 2
@@ -133,7 +132,7 @@ text = "🔄 Reset Progress"
 
 [node name="VillainSection" type="VBoxContainer" parent="MainContent" unique_id=-1093246938]
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_horizontal = 2
 alignment = 1
 
 [node name="VillainLabel" type="Label" parent="MainContent/VillainSection" unique_id=-1093246937]
