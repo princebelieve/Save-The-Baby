@@ -2,6 +2,7 @@ extends Control
 
 func _ready() -> void:
 	print("MAIN MENU LOADED")
+	GameManager.set_scene_rotation("MainMenu")
 
 	$MainContent/CentralSection/Buttons/StartButton.pressed.connect(_on_start_pressed)
 	$MainContent/CentralSection/Buttons/ContinueButton.pressed.connect(_on_continue_pressed)
@@ -13,16 +14,15 @@ func _on_start_pressed() -> void:
 	GameManager.reset_progress()
 	GameManager.current_scene_id = "scene_1"
 
-	var err = get_tree().change_scene_to_file("res://scenes/IntroScene.tscn")
-	print("CHANGE SCENE RESULT: ", err)
+	GameManager.change_scene("res://scenes/IntroScene.tscn", "IntroScene")
 
 func _on_continue_pressed() -> void:
 	if GameManager.load_saved_progress():
-		get_tree().change_scene_to_file("res://scenes/StoryScene.tscn")
+		GameManager.change_scene("res://scenes/StoryScene.tscn", "StoryScene")
 	else:
 		GameManager.reset_progress()
 		GameManager.current_scene_id = "scene_1"
-		get_tree().change_scene_to_file("res://scenes/StoryScene.tscn")
+		GameManager.change_scene("res://scenes/StoryScene.tscn", "StoryScene")
 
 func _on_reset_pressed() -> void:
 	GameManager.reset_progress()

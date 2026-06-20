@@ -23,17 +23,15 @@ color = Color(0.17, 0.22, 0.33, 1)
 [node name="GamePanel" type="Panel" parent="." unique_id=2007785847]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.02
-anchor_top = 0.02
-anchor_right = 0.98
-anchor_bottom = 0.98
+anchor_right = 1.0
+anchor_bottom = 1.0
 
 [node name="Title" type="Label" parent="GamePanel" unique_id=1503242419]
 layout_mode = 0
 anchor_left = 0.05
-anchor_top = 0.02
+anchor_top = 0.01
 anchor_right = 0.95
-anchor_bottom = 0.08
+anchor_bottom = 0.07
 theme_override_colors/font_color = Color(0.2, 0.9, 1, 1)
 theme_override_font_sizes/font_size = 36
 text = "SAVE ETHAN"
@@ -42,26 +40,32 @@ horizontal_alignment = 1
 [node name="Objective" type="Label" parent="GamePanel" unique_id=536101898]
 layout_mode = 0
 anchor_left = 0.05
-anchor_top = 0.09
+anchor_top = 0.07
 anchor_right = 0.95
-anchor_bottom = 0.14
+anchor_bottom = 0.11
 theme_override_colors/font_color = Color(0.7, 0.85, 0.95, 1)
 theme_override_font_sizes/font_size = 14
 text = "Find clues and rescue Ethan"
 horizontal_alignment = 1
 
-[node name="BoardContainer" type="Panel" parent="GamePanel" unique_id=1139430390]
-clip_contents = true
+[node name="BoardContainer" type="CenterContainer" parent="GamePanel" unique_id=1139430390]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.1
-anchor_top = 0.18
-anchor_right = 0.9
-anchor_bottom = 0.68
+anchor_top = 0.15
+anchor_right = 1.0
+anchor_bottom = 0.76
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="GridContainer" type="GridContainer" parent="GamePanel/BoardContainer" unique_id=1457981625]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="GamePanel/BoardContainer" unique_id=1139430391]
+custom_minimum_size = Vector2(448, 448)
+layout_mode = 2
+
+[node name="InnerPanel" type="Panel" parent="GamePanel/BoardContainer/AspectRatioContainer" unique_id=1139430392]
+clip_contents = true
+layout_mode = 2
+
+[node name="GridContainer" type="GridContainer" parent="GamePanel/BoardContainer/AspectRatioContainer/InnerPanel" unique_id=1457981625]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -72,18 +76,18 @@ columns = 8
 
 [node name="BabyProgress" type="ProgressBar" parent="GamePanel" unique_id=1486171812]
 layout_mode = 0
-anchor_left = 0.1
-anchor_top = 0.7
-anchor_right = 0.9
-anchor_bottom = 0.75
+anchor_left = 0.05
+anchor_top = 0.77
+anchor_right = 0.95
+anchor_bottom = 0.81
 max_value = 250.0
 
 [node name="MovesLabel" type="Label" parent="GamePanel" unique_id=1550245342]
 layout_mode = 0
-anchor_left = 0.1
-anchor_top = 0.76
+anchor_left = 0.05
+anchor_top = 0.82
 anchor_right = 0.45
-anchor_bottom = 0.8
+anchor_bottom = 0.86
 theme_override_colors/font_color = Color(0.2, 0.9, 1, 1)
 theme_override_font_sizes/font_size = 14
 text = "Moves: 25"
@@ -113,10 +117,10 @@ horizontal_alignment = 1
 
 [node name="Hint" type="Label" parent="GamePanel" unique_id=247056849]
 layout_mode = 0
-anchor_left = 0.08
-anchor_top = 0.14
-anchor_right = 0.92
-anchor_bottom = 0.18
+anchor_left = 0.05
+anchor_top = 0.11
+anchor_right = 0.95
+anchor_bottom = 0.15
 theme_override_colors/font_color = Color(0.7, 0.9, 0.7, 1)
 theme_override_font_sizes/font_size = 12
 text = "Match items to continue the rescue"

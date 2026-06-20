@@ -23,6 +23,14 @@ config/features=PackedStringArray("4.6")
 GameManager="*res://scripts/GameManager.gd"
 AssetLoader="*res://scripts/AssetLoader.gd"
 
+[display]
+
+window/size/viewport_width=480
+window/size/viewport_height=854
+window/size/window_width_override=480
+window/size/window_height_override=854
+window/handheld/orientation=1
+
 [rendering]
 
 textures/vram_compression/import_etc2_astc=true

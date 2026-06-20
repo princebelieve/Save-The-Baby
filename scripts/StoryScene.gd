@@ -1,6 +1,7 @@
 extends Control
 
 func _ready() -> void:
+	GameManager.set_scene_rotation("StoryScene")
 	show_scene(GameManager.current_scene_id)
 
 func show_scene(scene_id: String) -> void:
@@ -23,7 +24,7 @@ func show_scene(scene_id: String) -> void:
 		GameManager.current_level_id = "level_1"
 		GameManager.current_scene_id = scene_id
 		GameManager.save_progress()
-		get_tree().change_scene_to_file("res://scenes/LevelScene.tscn")
+		GameManager.change_scene("res://scenes/LevelScene.tscn", "LevelScene")
 		return
 	
 	for i in range(choices.size()):
@@ -54,7 +55,7 @@ func show_scene(scene_id: String) -> void:
 			GameManager.current_level_id = choice.get("nextLevel", "level_1")
 			GameManager.current_scene_id = scene_id
 			GameManager.save_progress()
-			get_tree().change_scene_to_file("res://scenes/LevelScene.tscn")
+			GameManager.change_scene("res://scenes/LevelScene.tscn", "LevelScene")
 		)
 		
 		$ContentPanel/ChoiceSection/Choices.add_child(btn)

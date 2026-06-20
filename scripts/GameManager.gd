@@ -62,3 +62,6 @@ func reset_progress() -> void:
 	current_level_id = "level_1"
 	if FileAccess.file_exists("user://save_the_baby_progress.json"):
 		DirAccess.remove_absolute("user://save_the_baby_progress.json")
+
+func go_to_scene(scene_path: String) -> void:
+	get_tree().change_scene_to_file(scene_path)

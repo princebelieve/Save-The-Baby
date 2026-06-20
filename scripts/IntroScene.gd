@@ -4,6 +4,7 @@ var typing_speed = 0.04
 
 func _ready() -> void:
 	randomize()
+	GameManager.set_scene_rotation("IntroScene")
 	await show_scene("scene_1")
 
 func show_scene(scene_id: String) -> void:
@@ -86,7 +87,7 @@ func show_choices(choices: Array) -> void:
 			GameManager.current_level_id = next_level
 			GameManager.current_scene_id = next_scene
 			GameManager.save_progress()
-			get_tree().change_scene_to_file("res://scenes/LevelScene.tscn")
+			GameManager.change_scene("res://scenes/LevelScene.tscn", "LevelScene")
 		)
 		
 		$ContentPanel/ChoiceSection/ChoiceButtons.add_child(btn)

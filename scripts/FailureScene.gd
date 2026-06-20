@@ -1,6 +1,7 @@
 extends Control
 
 func _ready() -> void:
+	GameManager.set_scene_rotation("FailureScene")
 
 	$ContentPanel/ButtonsSection/RetryButton.pressed.connect(
 		_on_retry_pressed
@@ -13,6 +14,7 @@ func _ready() -> void:
 
 func _on_retry_pressed() -> void:
 
-	get_tree().change_scene_to_file(
-		"res://scenes/LevelScene.tscn"
+	GameManager.change_scene(
+		"res://scenes/LevelScene.tscn",
+		"LevelScene"
 	)

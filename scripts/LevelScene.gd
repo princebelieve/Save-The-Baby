@@ -48,6 +48,7 @@ var score := 0
 
 func _ready() -> void:
 	randomize()
+	GameManager.set_scene_rotation("LevelScene")
 
 	level = GameManager.level_data.get("levels", { }).get(
 		GameManager.current_level_id,
@@ -95,9 +96,9 @@ func build_board() -> void:
 
 
 func _render_board() -> void:
-	for child in $GamePanel/BoardContainer/GridContainer.get_children():
+	for child in $GamePanel/BoardContainer/AspectRatioContainer/InnerPanel/GridContainer.get_children():
 		child.queue_free()
-
+	
 	for y in range(BOARD_SIZE):
 		for x in range(BOARD_SIZE):
 			var tile_type = board[y][x]
@@ -170,7 +171,7 @@ func _render_board() -> void:
 
 			tile_container.add_child(button)
 
-			$GamePanel/BoardContainer/GridContainer.add_child(tile_container)
+			$GamePanel/BoardContainer/AspectRatioContainer/InnerPanel/GridContainer.add_child(tile_container)
 
 func _on_tile_pressed(x: int, y: int):
 	var clicked := Vector2i(x, y)
@@ -228,7 +229,7 @@ func highlight_selected():
 
 	var index := selected.y * BOARD_SIZE + selected.x
 
-	var tile_container: Control = $GamePanel/BoardContainer/GridContainer.get_child(index)
+	var tile_container: Control = $GamePanel/BoardContainer/AspectRatioContainer/InnerPanel/GridContainer.get_child(index)
 
 	var tween := create_tween()
 
@@ -298,7 +299,7 @@ func _resolve_matches() -> bool:
 func _destroy_tile(pos: Vector2i):
 	var index = pos.y * BOARD_SIZE + pos.x
 
-	var btn = $GamePanel/BoardContainer/GridContainer.get_child(index)
+	var btn = $GamePanel/BoardContainer/AspectRatioContainer/InnerPanel/GridContainer.get_child(index)
 
 	var tween = create_tween()
 
@@ -395,8 +396,9 @@ func _win():
 
 	GameManager.save_progress()
 
-	get_tree().change_scene_to_file(
+	GameManager.change_scene(
 		"res://scenes/StoryScene.tscn",
+		"StoryScene"
 	)
 
 
@@ -439,6 +441,7 @@ func _lose():
 
 	await get_tree().create_timer(1.0).timeout
 
-	get_tree().change_scene_to_file(
+	GameManager.change_scene(
 		"res://scenes/FailureScene.tscn",
+		"FailureScene"
 	)
