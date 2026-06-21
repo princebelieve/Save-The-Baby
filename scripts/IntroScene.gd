@@ -8,7 +8,7 @@ func _ready() -> void:
 	GameManager.set_scene_rotation("IntroScene")
 	
 	# Connect skip button
-	$ContentPanel/SkipButton.pressed.connect(_on_skip_pressed)
+	$SkipButton.pressed.connect(_on_skip_pressed)
 	
 	# Start from scene_overview by default
 	var scene_id = GameManager.current_scene_id
@@ -28,22 +28,24 @@ func show_scene(scene_id: String) -> void:
 	is_skipping = false
 	var image_name = scene.get("image", "badge.png")
 	
-	# Determine if this is a full-screen image scene
-	var is_fullscreen = image_name in ["overview.png", "kidnapping.png"]
+	# Show content panel
+	$ContentPanel.show()
+	$ContentPanel/TopSection/Title.text = scene.get("title", "Story")
+	$ContentPanel/BottomSection/SpeakerLabel.text = scene.get("narrator", "") + ":"
 	
-	if is_fullscreen:
-		# Show full-screen image with fade-in
-		$ContentPanel.hide()
-		await show_fullscreen_image(image_name)
-		$ContentPanel.show()
-	else:
-		# Show character-based scene
-		$FullScreenContainer/PortraitImage.hide()
-		$ContentPanel/TopSection/Title.text = scene.get("title", "Story")
-		$ContentPanel/MiddleSection/SpeakerLabel.text = scene.get("narrator", "") + ":"
-		
-		# Load and display character image
+	# Only show character display for actual character images
+	var character_images = ["badge.png", "david.png", "Victor.png", "etan.png", "detective.png", "police.png", "phone.png", "recorder.png", "opened.png"]
+	
+	if image_name in character_images:
+		# Show character image in top section
+		$ContentPanel/TopSection/CharacterDisplay.show()
+		$ContentPanel/MiddleSection.hide()
 		show_character_image(image_name)
+	else:
+		# Show scene image in letterbox for overview/kidnapping/police-station
+		$ContentPanel/TopSection/CharacterDisplay.hide()
+		$ContentPanel/MiddleSection.show()
+		show_letterbox_image(image_name)
 	
 	# Show story text with typing animation
 	await show_typing_animation(scene.get("text", ""))
@@ -51,24 +53,16 @@ func show_scene(scene_id: String) -> void:
 	# Show choices
 	show_choices(scene.get("choices", []))
 
-func show_fullscreen_image(image_name: String) -> void:
+func show_letterbox_image(image_name: String) -> void:
 	var texture_path = "res://assets/" + image_name
 	var texture = load(texture_path)
 	
 	if texture == null:
 		print("Failed to load texture: ", texture_path)
+		$ContentPanel/MiddleSection/LetterboxContainer/LetterboxImage.texture = null
 		return
 	
-	$FullScreenContainer/PortraitImage.texture = texture
-	$FullScreenContainer/PortraitImage.show()
-	
-	# Fade in effect
-	var tween = create_tween()
-	$FullScreenContainer.modulate.a = 0.0
-	tween.tween_property($FullScreenContainer, "modulate:a", 1.0, 1.5)
-	
-	# Wait for user to proceed
-	await get_tree().create_timer(3.0).timeout
+	$ContentPanel/MiddleSection/LetterboxContainer/LetterboxImage.texture = texture
 
 func show_character_image(image_name: String) -> void:
 	var texture_path = "res://assets/" + image_name
@@ -80,32 +74,9 @@ func show_character_image(image_name: String) -> void:
 	
 	# Update character display
 	$ContentPanel/TopSection/CharacterDisplay/CharacterImage.texture = texture
-	
-	# Update character label
-	match image_name:
-		"badge.png":
-			$ContentPanel/TopSection/CharacterDisplay/CharacterLabel.text = "AMARA\n(Mother)"
-		"david.png":
-			$ContentPanel/TopSection/CharacterDisplay/CharacterLabel.text = "DAVID"
-		"Victor.png":
-			$ContentPanel/TopSection/CharacterDisplay/CharacterLabel.text = "VICTOR"
-		"etan.png":
-			$ContentPanel/TopSection/CharacterDisplay/CharacterLabel.text = "ETHAN"
-		"detective.png":
-			$ContentPanel/TopSection/CharacterDisplay/CharacterLabel.text = "DETECTIVE"
-		"police.png":
-			$ContentPanel/TopSection/CharacterDisplay/CharacterLabel.text = "POLICE"
-		"phone.png":
-			$ContentPanel/TopSection/CharacterDisplay/CharacterLabel.text = "TECH SPECIALIST"
-		"recorder.png":
-			$ContentPanel/TopSection/CharacterDisplay/CharacterLabel.text = "EQUIPMENT"
-		"opened.png":
-			$ContentPanel/TopSection/CharacterDisplay/CharacterLabel.text = "FREEDOM"
-		_:
-			$ContentPanel/TopSection/CharacterDisplay/CharacterLabel.text = "CHARACTER"
 
 func show_typing_animation(full_text: String) -> void:
-	var text_label = $ContentPanel/MiddleSection/StoryText
+	var text_label = $ContentPanel/BottomSection/StoryText
 	text_label.text = ""
 	
 	for i in range(len(full_text)):

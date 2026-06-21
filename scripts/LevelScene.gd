@@ -45,6 +45,11 @@ var selected := Vector2i(-1, -1)
 var moves_left := 0
 var score := 0
 
+# Swipe detection
+var swipe_start_pos := Vector2.ZERO
+var swipe_active := false
+var swipe_start_tile := Vector2i(-1, -1)
+
 
 func _ready() -> void:
 	randomize()
@@ -66,7 +71,7 @@ func _ready() -> void:
 	)
 
 	$GamePanel/Hint.text = (
-			"Swap adjacent tiles to match 3 or more!"
+			"Swipe with finger to match 3 or more!"
 	)
 
 	$GamePanel/Status.text = "Help David find Ethan..."
@@ -95,9 +100,76 @@ func build_board() -> void:
 	_render_board()
 
 
+func _input(event: InputEvent) -> void:
+	# Handle swipe input on the game board
+	var grid_node = $GamePanel/BoardContainer/AspectRatioContainer/InnerPanel/GridContainer
+	
+	if event is InputEventMouseButton:
+		if event.pressed:
+			# Start swipe
+			swipe_start_pos = event.position
+			swipe_active = true
+			swipe_start_tile = _get_tile_from_position(event.position)
+		else:
+			# End swipe
+			if swipe_active:
+				var end_tile = _get_tile_from_position(event.position)
+				if swipe_start_tile != Vector2i(-1, -1) and end_tile != Vector2i(-1, -1):
+					if _are_adjacent(swipe_start_tile, end_tile):
+						_on_swipe(swipe_start_tile, end_tile)
+						get_tree().root.set_input_as_handled()
+			swipe_active = false
+
+
+func _get_tile_from_position(pos: Vector2) -> Vector2i:
+	var grid_node = $GamePanel/BoardContainer/AspectRatioContainer/InnerPanel/GridContainer
+	var grid_rect = grid_node.get_global_rect()
+	
+	# Check if position is within grid
+	if not grid_rect.has_point(pos):
+		return Vector2i(-1, -1)
+	
+	# Calculate tile position
+	var local_pos = pos - grid_rect.position
+	var tile_size = grid_rect.size / BOARD_SIZE
+	
+	var tile_x = int(local_pos.x / tile_size.x)
+	var tile_y = int(local_pos.y / tile_size.y)
+	
+	# Clamp to board bounds
+	tile_x = clampi(tile_x, 0, BOARD_SIZE - 1)
+	tile_y = clampi(tile_y, 0, BOARD_SIZE - 1)
+	
+	return Vector2i(tile_x, tile_y)
+
+
+func _on_swipe(from: Vector2i, to: Vector2i) -> void:
+	selected = Vector2i(-1, -1)
+	
+	_swap(from, to)
+	
+	var matched := await _resolve_matches()
+	
+	if not matched:
+		_swap(to, from)
+		$GamePanel/Status.text = "That won't help rescue Ethan."
+	else:
+		$GamePanel/Status.text = "Great! Found a clue!"
+	
+	moves_left -= 1
+	_update_labels()
+	
+	if moves_left <= 0:
+		_lose()
+		return
+
+
 func _render_board() -> void:
-	for child in $GamePanel/BoardContainer/AspectRatioContainer/InnerPanel/GridContainer.get_children():
-		child.queue_free()
+	var grid = $GamePanel/BoardContainer/AspectRatioContainer/InnerPanel/GridContainer
+	
+	# Clear all children immediately (not queue_free) to avoid index mismatches
+	for child in grid.get_children():
+		child.free()
 	
 	for y in range(BOARD_SIZE):
 		for x in range(BOARD_SIZE):
@@ -174,51 +246,9 @@ func _render_board() -> void:
 			$GamePanel/BoardContainer/AspectRatioContainer/InnerPanel/GridContainer.add_child(tile_container)
 
 func _on_tile_pressed(x: int, y: int):
-	var clicked := Vector2i(x, y)
-
-	if selected.x < 0:
-		selected = clicked
-		highlight_selected()
-
-		$GamePanel/Status.text = "Choose a tile to swap."
-
-		return
-
-	if selected == clicked:
-		selected = Vector2i(-1, -1)
-		_render_board()
-
-		return
-
-	if _are_adjacent(selected, clicked):
-		var old := selected
-
-		_swap(old, clicked)
-
-		selected = Vector2i(-1, -1)
-
-		var matched := await _resolve_matches()
-
-		if not matched:
-			_swap(clicked, old)
-
-			$GamePanel/Status.text = "That won't help rescue Ethan."
-
-		else:
-			$GamePanel/Status.text = "Great! Found a clue!"
-
-		moves_left -= 1
-
-		_update_labels()
-
-		if moves_left <= 0:
-			_lose()
-			return
-
-	else:
-		selected = clicked
-
-		highlight_selected()
+	# Swipe system is now primary input method
+	# This function is kept for compatibility but not used
+	pass
 
 
 func highlight_selected():
@@ -227,9 +257,12 @@ func highlight_selected():
 	if selected.x < 0:
 		return
 
-	var index := selected.y * BOARD_SIZE + selected.x
-
-	var tile_container: Control = $GamePanel/BoardContainer/AspectRatioContainer/InnerPanel/GridContainer.get_child(index)
+	var tile_name = "Tile_%s_%s" % [selected.x, selected.y]
+	var grid = $GamePanel/BoardContainer/AspectRatioContainer/InnerPanel/GridContainer
+	var tile_container: Control = grid.get_node_or_null(tile_name)
+	
+	if not tile_container:
+		return
 
 	var tween := create_tween()
 
@@ -297,14 +330,17 @@ func _resolve_matches() -> bool:
 
 
 func _destroy_tile(pos: Vector2i):
-	var index = pos.y * BOARD_SIZE + pos.x
-
-	var btn = $GamePanel/BoardContainer/AspectRatioContainer/InnerPanel/GridContainer.get_child(index)
+	var tile_name = "Tile_%s_%s" % [pos.x, pos.y]
+	var grid = $GamePanel/BoardContainer/AspectRatioContainer/InnerPanel/GridContainer
+	var tile_container = grid.get_node_or_null(tile_name)
+	
+	if not tile_container:
+		return
 
 	var tween = create_tween()
 
 	tween.tween_property(
-		btn,
+		tile_container,
 		"scale",
 		Vector2.ZERO,
 		0.2,

@@ -20,29 +20,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.05, 0.08, 0.15, 1)
 
-[node name="FullScreenContainer" type="CenterContainer" parent="." unique_id=1053840415]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="PortraitImage" type="TextureRect" parent="FullScreenContainer" unique_id=978543032]
-custom_minimum_size = Vector2(480, 854)
-layout_mode = 2
-expand_mode = 3
-stretch_mode = 1
-
-[node name="ContentPanel" type="Control" parent="." unique_id=1501540798]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="SkipButton" type="Button" parent="ContentPanel" unique_id=414403771]
+[node name="SkipButton" type="Button" parent="." unique_id=414403771]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.85
@@ -54,18 +32,21 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 14
 text = "⊗ Skip"
 
-[node name="TopSection" type="VBoxContainer" parent="ContentPanel" unique_id=1762619404]
+[node name="ContentPanel" type="VBoxContainer" parent="." unique_id=1501540798]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.1
-anchor_top = 0.05
-anchor_right = 0.9
-anchor_bottom = 0.25
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
-grow_vertical = 0
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="TopSection" type="VBoxContainer" parent="ContentPanel" unique_id=1762619404]
+custom_minimum_size = Vector2(0, 130)
+layout_mode = 2
 
 [node name="Title" type="Label" parent="ContentPanel/TopSection" unique_id=1906729399]
-custom_minimum_size = Vector2(0, 50)
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.4, 0.2, 1)
 theme_override_font_sizes/font_size = 28
@@ -74,65 +55,57 @@ horizontal_alignment = 1
 
 [node name="CharacterDisplay" type="HBoxContainer" parent="ContentPanel/TopSection" unique_id=1536718625]
 layout_mode = 2
-size_flags_horizontal = 2
+size_flags_vertical = 2
 alignment = 1
 
-[node name="CharacterLabel" type="Label" parent="ContentPanel/TopSection/CharacterDisplay" unique_id=2078747473]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.8, 0.6, 0.9, 1)
-theme_override_font_sizes/font_size = 14
-text = "CHARACTER"
-horizontal_alignment = 1
-
 [node name="CharacterImage" type="TextureRect" parent="ContentPanel/TopSection/CharacterDisplay" unique_id=122407796]
-custom_minimum_size = Vector2(100, 120)
+custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 expand_mode = 3
 
-[node name="MiddleSection" type="VBoxContainer" parent="ContentPanel" unique_id=1934141438]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.08
-anchor_top = 0.28
-anchor_right = 0.92
-anchor_bottom = 0.65
-grow_horizontal = 2
-grow_vertical = 2
+[node name="MiddleSection" type="CenterContainer" parent="ContentPanel" unique_id=1934141438]
+custom_minimum_size = Vector2(0, 280)
+layout_mode = 2
 
-[node name="SpeakerLabel" type="Label" parent="ContentPanel/MiddleSection" unique_id=1320184281]
+[node name="LetterboxContainer" type="CenterContainer" parent="ContentPanel/MiddleSection" unique_id=1053840415]
+layout_mode = 2
+
+[node name="LetterboxImage" type="TextureRect" parent="ContentPanel/MiddleSection/LetterboxContainer" unique_id=978543032]
+custom_minimum_size = Vector2(400, 180)
+layout_mode = 2
+expand_mode = 3
+stretch_mode = 3
+
+[node name="BottomSection" type="VBoxContainer" parent="ContentPanel" unique_id=1025845671]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+
+[node name="SpeakerLabel" type="Label" parent="ContentPanel/BottomSection" unique_id=1320184281]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9, 0.7, 0.3, 1)
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 18
 text = "Speaker:"
 
-[node name="StoryText" type="Label" parent="ContentPanel/MiddleSection" unique_id=1131815951]
-custom_minimum_size = Vector2(0, 100)
+[node name="StoryText" type="Label" parent="ContentPanel/BottomSection" unique_id=1131815951]
 layout_mode = 2
+size_flags_vertical = 2
 theme_override_colors/font_color = Color(0.85, 0.85, 0.85, 1)
-theme_override_font_sizes/font_size = 16
+theme_override_font_sizes/font_size = 20
 autowrap_mode = 2
 
 [node name="ChoiceSection" type="VBoxContainer" parent="ContentPanel" unique_id=1224934844]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.1
-anchor_top = 0.68
-anchor_right = 0.9
-anchor_bottom = 0.98
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
+size_flags_vertical = 2
 
 [node name="ChoiceLabel" type="Label" parent="ContentPanel/ChoiceSection" unique_id=972318238]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.4, 0.85, 1, 1)
-theme_override_font_sizes/font_size = 16
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+theme_override_font_sizes/font_size = 24
 text = "What will you do?"
+horizontal_alignment = 1
 
 [node name="ChoiceButtons" type="VBoxContainer" parent="ContentPanel/ChoiceSection" unique_id=215696371]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-alignment = 1
+size_flags_vertical = 2

@@ -3,10 +3,15 @@ extends Control
 func _ready() -> void:
 	print("MAIN MENU LOADED")
 
+	# Load Ethan's image
+	var ethan_texture = load("res://assets/etan.png")
+	if ethan_texture:
+		$MainLayout/EthanContainer/EthanImage.texture = ethan_texture
 
-	$MainContent/CentralSection/Buttons/StartButton.pressed.connect(_on_start_pressed)
-	$MainContent/CentralSection/Buttons/ContinueButton.pressed.connect(_on_continue_pressed)
-	$MainContent/CentralSection/Buttons/ResetButton.pressed.connect(_on_reset_pressed)
+	# Connect button signals
+	$MainLayout/ButtonsContainer/StartButton.pressed.connect(_on_start_pressed)
+	$MainLayout/ButtonsContainer/ContinueButton.pressed.connect(_on_continue_pressed)
+	$MainLayout/ButtonsContainer/ResetButton.pressed.connect(_on_reset_pressed)
 
 func _on_start_pressed() -> void:
 	print("START STORY CLICKED")
